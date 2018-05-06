@@ -1,0 +1,81 @@
+{
+  "name": "bt-presence-adapter",
+  "version": "0.0.0",
+  "description": "Bluetooth presence adapter for Mozilla IoT Gateway.",
+  "author": "Poul Christiansen",
+  "main": "bootstrap.py",
+  "keywords": [
+    "mozilla",
+    "iot",
+    "adapter",
+    "bluetooth",
+    "presence"
+  ],
+  "homepage": "https://github.com/pchri/bt-presence-adapter",
+  "license": "MPL-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pchri/bt-presence-adapter.git"
+  },
+  "bugs": {
+    "url": "https://github.com/pchri/bt-presence-adapter/issues"
+  },
+  "files": [
+    "LICENSE",
+    "SHA256SUMS",
+    "bootstrap.py",
+    "main.py",
+    "pkg/__init__.py",
+    "pkg/bt_presence_adapter.py",
+    "pkg/bt_presence_device.py",
+    "pkg/ble_presence_device.py",
+    "pkg/bt_presence_property.py",
+    "requirements.txt",
+    "setup.cfg"
+  ],
+  "moziot": {
+    "api": {
+      "min": 2,
+      "max": 2
+    },
+    "plugin": true,
+    "exec": "python3 {path}/bootstrap.py",
+    "config": {
+      "devices": [
+      ]
+    },
+    "schema": {
+      "type": "object",
+      "properties": {
+        "devices": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "addr", "name", "type"
+            ],
+            "properties": {
+              "addr": {
+                "type": "string",
+                "description": "The Bluetooth MAC Address or the device in the standard colon delimited format. Eg. `01:23:45:67:89:0A`",
+                "pattern": "^([A-F0-9]{2}:){5}[A-F0-9]{2}$"
+              },
+              "name": {
+                "type": "string",
+                "description": "The name of the device"
+              },
+              "type": {
+                "type": "string",
+                "description": "The type of Bluetooth device",
+                "enum": [
+                  "bluetooth",
+                  "ble"
+                ]
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
