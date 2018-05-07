@@ -1,9 +1,15 @@
 """Bluetooth Presence Detector adapter for Mozilla IoT Gateway."""
 
+import threading
+
 from gateway_addon import Adapter, Database
 from .bt_presence_device import BluetoothPresenceDevice
 
 import bluetooth as bt
+from bluetooth.ble import DiscoveryService
+
+import functools
+print = functools.partial(print, flush=True)
 
 _TIMEOUT = 10
 _BLUETOOTH_TYPE = "bluetooth"
@@ -35,7 +41,8 @@ class BluetoothPresenceAdapter(Adapter):
         if type == _BLUETOOTH_TYPE:
             device = BluetoothPresenceDevice(self, addr, addr, name)
         elif type == _BLE_TYPE:
-            device = BluetoothPresenceDevice(self, addr, addr, name)
+            pass
+            # device = BluetoothPresenceDevice(self, addr, addr, name)
         if device:
             self.handle_device_added(device)
 
@@ -45,6 +52,33 @@ class BluetoothPresenceAdapter(Adapter):
         config = db.save_config(self.config)
         db.close()
 
+    def ble_pairing(self):
+        svc = DiscoveryService()
+        try:
+            for addr, name in svc.discover(self.timeout).items():
+                if not self.pairing:
+                    break
+                self.maybe_add(addr, name, _BLE_TYPE)
+        except:
+            print("BLE pairing exception ", sys.exc_info())
+
+    def bt_pairing(self):
+        for addr, name in bt.discover_devices(self.timeout, flush_cache=True, lookup_names=True):
+            if not self.pairing:
+                break
+            self.maybe_add(addr, name, _BLUETOOTH_TYPE)
+
+    def maybe_add_config(self, addr, name, type):
+        if addr not in map(lambda o: o['addr'], self.config['devices']):
+            d = { 'name': name, 'addr': addr, 'type': type }
+            self.config['devices'].append(d)
+            self.config_changed = True
+
+    def maybe_add(self, addr, name, type):
+        if addr not in self.devices:
+            self.maybe_add_config(addr, name, type)
+            self.create_device(name, addr, type)
+
     def start_pairing(self, timeout):
         """
         Start the pairing process.
@@ -52,21 +86,31 @@ class BluetoothPresenceAdapter(Adapter):
         timeout -- Timeout in seconds at which to quit pairing
         """
         self.pairing = True
-        config_chanced = False
-        for addr, name in bt.discover_devices(duration=min(timeout, _TIMEOUT), flush_cache=True, lookup_names=True):
-            if not self.pairing:
-                break
-            if addr not in self.devices:
-                d = { 'name': name, 'addr': addr, 'type': _BLUETOOTH_TYPE }
-                self.config['devices'].append(d)
-                config_changed = True
-                self.create_device(name, addr, _BLUETOOTH_TYPE)
-        if config_changed:
+        self.config_chanced = False
+        self.timeout = min(timeout, _TIMEOUT)
+        t1 = threading.Thread(target=self.bt_pairing)
+        t1.start()
+        t2 = threading.Thread(target=self.ble_pairing)
+        t2.start()
+        t1.join()
+        t2.join()
+        if self.config_changed:
             self.save_config()
-
         self.pairing = False
-
 
     def cancel_pairing(self):
         """Cancel the pairing process."""
         self.pairing = False
+
+    def handle_device_removed(self, device):
+        addr = device.addr
+        print("handle_device_removed: ", addr)
+        super(BluetoothPresenceAdapter, self).handle_device_removed(device)
+        for d in self.config['devices']:
+            print("LOOKING AT ", d['addr'])
+            if d['addr'] == addr:
+                print("REMOVING ", d)
+                self.config['devices'].remove(d)
+                self.save_config()
+                break
+        # Remove addr from configuration
