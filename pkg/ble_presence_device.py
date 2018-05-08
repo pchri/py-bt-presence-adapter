@@ -6,12 +6,19 @@ import sys, time
 
 from .bt_presence_property import BluetoothPresenceProperty
 
-import bluetooth.bluez as bt
+from bluetooth.ble import DiscoveryService
+
+import functools
+print = functools.partial(print, flush=True)
 
 _POLL_INTERVAL = 10
+_POLL_TIMEOUT = 10
 
 class BLEPresenceDevice(Device):
     """Bluetooth (BLE) Presence Detector device type."""
+
+    scanner = None
+    adapter = None
 
     def __init__(self, adapter, _id, addr, name):
         """
@@ -23,22 +30,28 @@ class BLEPresenceDevice(Device):
         name -- name of the BT device with the addr
         """
         Device.__init__(self, adapter, _id)
-
         self.addr = addr
         self.name = name
         self.type = 'binarySensor'
-        self.properties['on'] = BluetoothPresenceProperty(
-            self, 'on', {'type': 'boolean'}, True)
+        self.properties['on'] = BluetoothPresenceProperty(self, False)
 
-        t = threading.Thread(target=self.poll)
-        t.daemon = True
-        t.start()
+        if not BLEPresenceDevice.scanner:
+            BLEPresenceDevice.adapter = adapter
+            BLEPresenceDevice.scanner = threading.Thread(target=BLEPresenceDevice.poll)
+            BLEPresenceDevice.scanner.daemon = True
+            BLEPresenceDevice.scanner.start()
 
-    def poll(self):
-        """Poll the device for changes."""
+    @staticmethod
+    def poll():
+        """Poll BLEs for changes."""
+        svc = DiscoveryService()
         while True:
             time.sleep(_POLL_INTERVAL)
-            if not self.adapter.pairing:
-                res = bt.lookup_name(self.addr)
-                bval = not not res
-                self.properties['on'].update(bval)
+            if not BLEPresenceDevice.adapter.pairing:
+                try:
+                    devs = list(svc.discover(_POLL_TIMEOUT))
+                    for addr, dev in BLEPresenceDevice.adapter.devices.items():
+                        if isinstance(dev, BLEPresenceDevice):
+                            dev.properties['on'].update(addr in devs)
+                except:
+                    print("BLE discover exception ", sys.exc_info())

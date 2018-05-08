@@ -27,8 +27,7 @@ class BluetoothPresenceDevice(Device):
         self.addr = addr
         self.name = name
         self.type = 'binarySensor'
-        self.properties['on'] = BluetoothPresenceProperty(
-            self, 'on', {'type': 'boolean'}, True)
+        self.properties['on'] = BluetoothPresenceProperty(self, False)
 
         t = threading.Thread(target=self.poll)
         t.daemon = True
