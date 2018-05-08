@@ -5,11 +5,10 @@ Exposes individual Bluetooth devices as simple binary sensors
 
 ## Status of version 0.0.0
 
-- Can scan for standard bluetooth (not BLE) devices
+- Can scan for standard bluetooth (and BLE) devices
 - Creates device configuration for each detected device
 - Device configuration exposed and visible in the add-ons GUI
 - Real-time (well - scanning every 10 seconds) presence of device as a binary sensor
-- Cannot handle BLE devices yet.
 
 Tested on my RPi 3. It can detect my iPhone, iPad and Linux laptop.
 
@@ -19,6 +18,7 @@ Tested on my RPi 3. It can detect my iPhone, iPad and Linux laptop.
 - ~~Need to move configuration handling to a separate class~~
 - ~~Implement the BLEDevice class. Probably using a class/static thread variable~~
 - Figure out the dependencies/requirements.txt 
+- Test what happens when other processes are using BT. It seems the exception handling in the BLE code does the trick.
 
 ## INFO
 
