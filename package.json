@@ -27,6 +27,7 @@
     "main.py",
     "pkg/__init__.py",
     "pkg/bt_presence_adapter.py",
+    "pkg/bt_presence_config.py",
     "pkg/bt_presence_device.py",
     "pkg/ble_presence_device.py",
     "pkg/bt_presence_property.py",

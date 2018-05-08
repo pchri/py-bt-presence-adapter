@@ -11,6 +11,7 @@ import time
 sys.path.append(path.join(path.dirname(path.abspath(__file__)), 'lib'))
 
 from pkg.bt_presence_adapter import BluetoothPresenceAdapter
+from pkg.bt_presence_config import BluetoothPresenceConfig
 
 _API_VERSION = {
     'min': 2,
@@ -38,10 +39,7 @@ if __name__ == '__main__':
     signal.signal(signal.SIGTERM, cleanup)
 
     try:
-        db = gateway_addon.Database('bt-presence-adapter')
-        db.open()
-        config = db.load_config()
-        db.close()
+        config = BluetoothPresenceConfig('bt-presence-adapter')
 
         _ADAPTER = BluetoothPresenceAdapter(config, verbose=True)
 
