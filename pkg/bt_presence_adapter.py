@@ -103,6 +103,5 @@ class BluetoothPresenceAdapter(Adapter):
 
     def handle_device_removed(self, device):
         addr = device.addr
-        print("handle_device_removed: ", addr)
         super(BluetoothPresenceAdapter, self).handle_device_removed(device)
         self.remove_device_config(addr)

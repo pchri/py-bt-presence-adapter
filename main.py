@@ -1,12 +1,14 @@
 """Bluetooth Presence Detector adapter for Mozilla IoT Gateway."""
 
 from os import path
-import functools
 import gateway_addon
 
 import signal
 import sys
 import time
+
+import functools
+print = functools.partial(print, flush=True)
 
 sys.path.append(path.join(path.dirname(path.abspath(__file__)), 'lib'))
 
@@ -19,15 +21,11 @@ _API_VERSION = {
 }
 _ADAPTER = None
 
-print = functools.partial(print, flush=True)
-
-
 def cleanup(signum, frame):
     """Clean up any resources before exiting."""
     if _ADAPTER is not None:
         _ADAPTER.close_proxy()
     sys.exit(0)
-
 
 if __name__ == '__main__':
     if gateway_addon.API_VERSION < _API_VERSION['min'] or \
@@ -40,7 +38,6 @@ if __name__ == '__main__':
 
     try:
         config = BluetoothPresenceConfig('bt-presence-adapter')
-
         _ADAPTER = BluetoothPresenceAdapter(config, verbose=True)
 
         # Wait until the proxy stops running, indicating that the gateway shut us

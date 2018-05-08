@@ -16,8 +16,8 @@ Tested on my RPi 3. It can detect my iPhone, iPad and Linux laptop.
 ## TODO
 
 - ~~Figure out how to detect BLE devices without being root. The standard tools can detect my Adafruit Bluefruit LE and my Garmin Forerunner only when running as root. The Python library also requires root priviledges.~~
-- Need to move configuration handling to a separate class
-- Implement the BLEDevice class. Probably using a class/static thread variable
+- ~~Need to move configuration handling to a separate class~~
+- ~~Implement the BLEDevice class. Probably using a class/static thread variable~~
 - Figure out the dependencies/requirements.txt 
 
 ## INFO
