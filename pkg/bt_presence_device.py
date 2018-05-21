@@ -5,8 +5,7 @@ import threading
 import sys, time
 
 from .bt_presence_property import BluetoothPresenceProperty
-
-import bluetooth.bluez as bt
+from .bt_interface import BTLookupName
 
 _POLL_INTERVAL = 10
 
@@ -38,6 +37,6 @@ class BluetoothPresenceDevice(Device):
         while True:
             time.sleep(_POLL_INTERVAL)
             if not self.adapter.pairing:
-                res = bt.lookup_name(self.addr)
+                res = BTLookupName(self.addr)
                 bval = not not res
                 self.properties['on'].update(bval)

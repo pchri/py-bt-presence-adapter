@@ -9,6 +9,7 @@ Exposes individual Bluetooth devices as simple binary sensors
 - Creates device configuration for each detected device
 - Device configuration exposed and visible in the add-ons GUI
 - Real-time (well - scanning every 10 seconds) presence of device as a binary sensor
+- Gracefully handles missing Bluetooth/BLE python modules
 
 Tested on my RPi 3. It can detect my iPhone, iPad and Linux laptop.
 
@@ -19,6 +20,13 @@ Tested on my RPi 3. It can detect my iPhone, iPad and Linux laptop.
 - ~~Implement the BLEDevice class. Probably using a class/static thread variable~~
 - Figure out the dependencies/requirements.txt 
 - Test what happens when other processes are using BT. It seems the exception handling in the BLE code does the trick.
+
+## Installing
+The necessary python/bluetooth requirements can be installed like this
+```
+% sudo apt-get install python3-pip libbluetooth-dev libglib2.0-dev libboost-thread-dev libboost-python-dev
+% sudo python3 -m pip install pybluez gattlib
+```
 
 ## INFO
 

@@ -5,8 +5,7 @@ import threading
 import sys, time
 
 from .bt_presence_property import BluetoothPresenceProperty
-
-from bluetooth.ble import DiscoveryService
+from .ble_interface import BLEDiscover
 
 import functools
 print = functools.partial(print, flush=True)
@@ -44,12 +43,11 @@ class BLEPresenceDevice(Device):
     @staticmethod
     def poll():
         """Poll BLEs for changes."""
-        svc = DiscoveryService()
         while True:
             time.sleep(_POLL_INTERVAL)
             if not BLEPresenceDevice.adapter.pairing:
                 try:
-                    devs = list(svc.discover(_POLL_TIMEOUT))
+                    devs = list(BLEDiscover(_POLL_TIMEOUT))
                     for addr, dev in BLEPresenceDevice.adapter.devices.items():
                         if isinstance(dev, BLEPresenceDevice):
                             dev.properties['on'].update(addr in devs)

@@ -5,9 +5,8 @@ import threading
 from gateway_addon import Adapter
 from .bt_presence_device import BluetoothPresenceDevice
 from .ble_presence_device import BLEPresenceDevice
-
-import bluetooth as bt
-from bluetooth.ble import DiscoveryService
+from .ble_interface import BLEDiscover
+from .bt_interface import BTDiscover
 
 import functools
 print = functools.partial(print, flush=True)
@@ -60,9 +59,8 @@ class BluetoothPresenceAdapter(Adapter):
         self.config.save()
 
     def ble_pairing(self):
-        svc = DiscoveryService()
         try:
-            for addr, name in svc.discover(self.timeout).items():
+            for addr, name in BLDiscover(self.timeout).items():
                 if not self.pairing:
                     break
                 self.maybe_add(addr, name, _BLE_TYPE)
@@ -70,7 +68,7 @@ class BluetoothPresenceAdapter(Adapter):
             print("BLE discover exception ", sys.exc_info())
 
     def bt_pairing(self):
-        for addr, name in bt.discover_devices(self.timeout, flush_cache=True, lookup_names=True):
+        for addr, name in BTDiscover(self.timeout):
             if not self.pairing:
                 break
             self.maybe_add(addr, name, _BLUETOOTH_TYPE)
