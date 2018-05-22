@@ -25,13 +25,14 @@ Tested on my RPi 3. It can detect my iPhone, iPad and Linux laptop.
 The necessary python/bluetooth requirements can be installed like this
 ```
 % sudo apt-get install python3-pip libbluetooth-dev libglib2.0-dev libboost-thread-dev libboost-python-dev
-% sudo python3 -m pip install pybluez gattlib
+% sudo python3 -m pip install pybluez pygattlib
 ```
 
 ## INFO
 
 It seems
 ```
+sudo apt-get install libcap2-bin
 sudo setcap cap_net_raw,cap_net_admin+eip /usr/bin/python3.5
 ```
 does the trick...

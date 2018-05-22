@@ -15,7 +15,7 @@ except:
 def BTDiscover(timeout):
     if hasBT:
         return bt.discover_devices(timeout, flush_cache=True, lookup_names=True)
-    return {}
+    return []
 
 def BTLookupName(addr):
     if hasBT:
