@@ -22,10 +22,27 @@ Tested on my RPi 3. It can detect my iPhone, iPad and Linux laptop.
 - Test what happens when other processes are using BT. It seems the exception handling in the BLE code does the trick.
 
 ## Installing
+
+Install ffi library
+```
+% sudo apt-get install libffi-dev
+% sudo apt-get install libnanomsg-dev
+```
+
+Install the gateway-addon-python: https://github.com/mozilla-iot/gateway-addon-python
+
+```
+git clone https://github.com/mozilla-iot/gateway-addon-python
+cd gateway-addon-python
+sudo python3 setup.py build
+sudo python3 setup.py install
+```
+
 The necessary python/bluetooth requirements can be installed like this
 ```
-% sudo apt-get install python3-pip libbluetooth-dev libglib2.0-dev libboost-thread-dev libboost-python-dev
+% sudo apt-get install libcap2-bin python3-pip libbluetooth-dev libglib2.0-dev libboost-thread-dev libboost-python-dev
 % sudo python3 -m pip install pybluez pygattlib
+% sudo setcap cap_net_raw,cap_net_admin+eip `readlink -f \`which python3\``
 ```
 
 ## INFO
