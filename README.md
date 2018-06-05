@@ -44,6 +44,13 @@ The necessary python/bluetooth requirements can be installed like this
 % sudo python3 -m pip install pybluez pygattlib
 % sudo setcap cap_net_raw,cap_net_admin+eip `readlink -f \`which python3\``
 ```
+## Install on top of a Mozilla prebuilt Raspberry Pi OS image
+
+To get standard Bluetooth to work this should be done before enabling the adapter
+
+```
+% sudo apt-get install libbluetooth-dev
+```
 
 ## INFO
 
