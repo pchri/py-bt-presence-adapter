@@ -52,6 +52,14 @@ To get standard Bluetooth to work this should be done before enabling the adapte
 % sudo apt-get install libbluetooth-dev
 ```
 
+To get BLE to work this should be done in addition to the above before enabling the adapter
+
+```
+% sudo apt-get install libglib2.0-dev libboost-python-dev libboost-thread-dev
+% sudo pip3 install pygattlib
+% sudo setcap cap_net_raw,cap_net_admin+eip `readlink -f \`which python3\``
+```
+
 ## INFO
 
 It seems
