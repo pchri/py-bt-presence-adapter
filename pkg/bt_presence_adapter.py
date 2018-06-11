@@ -60,7 +60,7 @@ class BluetoothPresenceAdapter(Adapter):
 
     def ble_pairing(self):
         try:
-            for addr, name in BLDiscover(self.timeout).items():
+            for addr, name in BLEDiscover(self.timeout).items():
                 if not self.pairing:
                     break
                 self.maybe_add(addr, name, _BLE_TYPE)
