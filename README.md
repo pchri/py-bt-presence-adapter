@@ -1,7 +1,7 @@
 # bt-presence-adapter
 Mozilla IoT adapter for detecting Bluetooth device presence
 
-Exposes individual Bluetooth devices as simple binary sensors. If the Bluetooth device in within range of the IOT gateway the binary sensor will be On, otherwise it will be on. 
+Exposes individual Bluetooth devices as simple binary sensors. If the Bluetooth device in within range of the IOT gateway the binary sensor will be On, otherwise it will be Off. 
 
 This has many applications. Like automatically turning the IoT enabled toaster off when you leave you house with your phone. Or turning dimmed lights on when you return to your house in the evening.
 
@@ -20,8 +20,8 @@ Tested on my RPi 3. It can detect my iPhone, iPad, Linux laptop, Windows laptop,
 - ~~Figure out how to detect BLE devices without being root. The standard tools can detect my Adafruit Bluefruit LE and my Garmin Forerunner only when running as root. The Python library also requires root priviledges.~~
 - ~~Need to move configuration handling to a separate class~~
 - ~~Implement the BLEDevice class. Probably using a class/static thread variable~~
-- ~~~Figure out the dependencies/requirements.txt ~~~
-- ~~~Test what happens when other processes are using BT. It seems the exception handling in the BLE code does the trick.~~~
+- ~~Figure out the dependencies/requirements.txt ~~
+- ~~Test what happens when other processes are using BT. It seems the exception handling in the BLE code does the trick.~~
 - Make a release
 
 ## Install on top of a Mozilla prebuilt Raspberry Pi OS image
