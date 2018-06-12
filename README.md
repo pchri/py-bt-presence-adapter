@@ -67,3 +67,7 @@ The necessary python/bluetooth requirements can be installed like this
 ```
 ## INFO
 
+## NOTES TO SELF
+
+/lib/ld-linux.so.3 --library-path PATH /usr/bin/python3.5
+
