@@ -5,6 +5,14 @@ Exposes individual Bluetooth devices as simple binary sensors. If the Bluetooth 
 
 This has many applications. Like automatically turning the IoT enabled toaster off when you leave you house with your phone. Or turning dimmed lights on when you return to your house in the evening.
 
+## Version 0.1.0
+This release contains the necessary binary library to make Bluetooth detection work on a Raspberry Pi 3 when installed on a Mozilla prebuilt image.
+
+To make BLE work, read the instructions for version 0.1.0 below.
+
+I hope in the future the necessary libraries for BT and BLE will be included in the gateway. I'll be working on that next.
+When that happens I'll release a new version of this addon without the binary library.
+
 ## Status of version 0.0.0
 
 - Can scan for standard bluetooth (and BLE) devices
