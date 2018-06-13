@@ -1,6 +1,6 @@
 {
   "name": "bt-presence-adapter",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Bluetooth presence adapter for Mozilla IoT Gateway.",
   "author": "Poul Christiansen",
   "main": "bootstrap.py",
