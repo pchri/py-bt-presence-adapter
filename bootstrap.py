@@ -50,4 +50,5 @@ except ImportError:
     if not install_packages():
         sys.exit(100)
 
-os.execl(sys.executable, sys.executable, os.path.join(_BASE_DIR, 'main.py'))
+# os.execl(sys.executable, sys.executable, os.path.join(_BASE_DIR, 'main.py'))
+os.execl("/lib/ld-linux.so.3", "/lib/ld-linux.so.3", "--library-path", os.path.join(_BASE_DIR, "lib/linux-arm64"), sys.executable, os.path.join(_BASE_DIR, 'main.py'))
