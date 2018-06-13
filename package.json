@@ -34,7 +34,8 @@
     "pkg/bt_presence_device.py",
     "pkg/bt_presence_property.py",
     "requirements.txt",
-    "setup.cfg"
+    "setup.cfg",
+    "lib/linux-arm64/libbluetooth.so.3"
   ],
   "moziot": {
     "api": {
@@ -42,7 +43,7 @@
       "max": 2
     },
     "plugin": true,
-    "exec": "python3 {path}/bootstrap.py",
+    "exec": "/lib/ld-linux.so.3 --library-path {path}/lib/linux-arm64 /usr/bin/python3 {path}/bootstrap.py",
     "config": {
       "devices": [
       ]

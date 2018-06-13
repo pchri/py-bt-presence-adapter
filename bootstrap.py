@@ -24,9 +24,11 @@ def install_packages():
     except ImportError:
         pass
 
+    # cmd = (
+    #     '{} -m pip install {} --install-option="--prefix=" -t lib '
+    #     '-r requirements.txt'.format(sys.executable, system_option))
     cmd = (
-        '{} -m pip install {} --install-option="--prefix=" -t lib '
-        '-r requirements.txt'.format(sys.executable, system_option))
+        '{} -m pip install pybluez'.format(sys.executable))
 
     try:
         subprocess.check_call(cmd,

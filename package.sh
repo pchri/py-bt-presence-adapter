@@ -5,12 +5,17 @@ set -e
 version=$(grep version package.json | cut -d: -f2 | cut -d\" -f2)
 
 # Clean up from previous releases
-rm -rf *.tgz package
+rm -rf *.tgz package lib
 rm -f SHA256SUMS
 
 # Put package together
+mkdir -p lib/linux-arm64
+if [ ! -f /usr/lib/arm-linux-gnueabihf/libbluetooth.so.3 ]; then
+  sudo apt-get install libbluetooth3
+fi
+cp /usr/lib/arm-linux-gnueabihf/libbluetooth.so.3 lib/linux-arm64
 mkdir package
-cp -r pkg LICENSE package.json *.py requirements.txt setup.cfg package/
+cp -r pkg lib LICENSE package.json *.py requirements.txt setup.cfg package/
 find package -type f -name '*.pyc' -delete
 find package -type d -empty -delete
 
