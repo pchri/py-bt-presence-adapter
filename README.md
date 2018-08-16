@@ -5,6 +5,13 @@ Exposes individual Bluetooth devices as simple binary sensors. If the Bluetooth 
 
 This has many applications. Like automatically turning the IoT enabled toaster off when you leave you house with your phone. Or turning dimmed lights on when you return to your house in the evening.
 
+## Version 0.2.0
+Version 0.2.0 works with Mozilla IoT - Things Gateway version 0.5.0.
+
+The Gateway version 0.5.0 contains the necessary binary libraries for making Bluetooth device detection work on a raspberry Pi 3, so they are no longer contained in this adapter release.
+
+Notice that it may take up to 3 minutes (on my Raspberry Pi 3) to install the adapter, as there are some Python dependencies that are required.
+
 ## Version 0.1.0
 This release contains the necessary binary library to make Bluetooth detection work on a Raspberry Pi 3 when installed on a Mozilla prebuilt image.
 
