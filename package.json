@@ -1,6 +1,6 @@
 {
   "name": "bt-presence-adapter",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Bluetooth presence adapter for Mozilla IoT Gateway.",
   "author": "Poul Christiansen",
   "main": "bootstrap.py",
@@ -34,8 +34,7 @@
     "pkg/bt_presence_device.py",
     "pkg/bt_presence_property.py",
     "requirements.txt",
-    "setup.cfg",
-    "lib/linux-arm64/libbluetooth.so.3"
+    "setup.cfg"
   ],
   "moziot": {
     "api": {
@@ -43,7 +42,7 @@
       "max": 2
     },
     "plugin": true,
-    "exec": "/lib/ld-linux.so.3 --library-path {path}/lib/linux-arm64 /usr/bin/python3 {path}/bootstrap.py",
+    "exec": "/usr/bin/python3 {path}/bootstrap.py",
     "config": {
       "devices": [
       ]

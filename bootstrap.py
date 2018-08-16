@@ -10,9 +10,7 @@ import os
 import subprocess
 import sys
 
-
 _BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-
 
 def install_packages():
     """Install all packages listed in requirements.txt."""
@@ -24,11 +22,9 @@ def install_packages():
     except ImportError:
         pass
 
-    # cmd = (
-    #     '{} -m pip install {} --install-option="--prefix=" -t lib '
-    #     '-r requirements.txt'.format(sys.executable, system_option))
     cmd = (
-        '{} -m pip install pybluez'.format(sys.executable))
+        '{} -m pip install {} --install-option="--prefix=" -t lib '
+        '-r requirements.txt'.format(sys.executable, system_option))
 
     try:
         subprocess.check_call(cmd,
@@ -44,11 +40,11 @@ def install_packages():
 try:
     sys.path.append(os.path.join(_BASE_DIR, 'lib'))
     import bluetooth.bluez
+    import bluetooth.ble
 except ImportError:
     # If installation failed, exit with 100 to tell the gateway not to restart
     # this process.
     if not install_packages():
         sys.exit(100)
 
-# os.execl(sys.executable, sys.executable, os.path.join(_BASE_DIR, 'main.py'))
-os.execl("/lib/ld-linux.so.3", "/lib/ld-linux.so.3", "--library-path", os.path.join(_BASE_DIR, "lib/linux-arm64"), sys.executable, os.path.join(_BASE_DIR, 'main.py'))
+os.execl(sys.executable, sys.executable, os.path.join(_BASE_DIR, 'main.py'))
